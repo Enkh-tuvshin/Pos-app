@@ -1,3 +1,4 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Slot } from "expo-router";
 import { Typography, Colors, Spacings } from "react-native-ui-lib";
 
@@ -14,7 +15,16 @@ Typography.loadTypographies({
 Spacings.loadSpacings({
   page: 16,
 });
+const client = new ApolloClient({
+  // uri: "https://nextjs-graphql-chi.vercel.app/api/graphql",
+  uri: "http://192.168.1.9:3000/api/graphql",
+  cache: new InMemoryCache(),
+});
 
-const RootLayout = () => <Slot />;
+const RootLayout = () => (
+  <ApolloProvider client={client}>
+    <Slot />
+  </ApolloProvider>
+);
 
 export default RootLayout;
